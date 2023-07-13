@@ -12,7 +12,7 @@ contract token {
         address mintAuthority, // mint authority for the mint account
         address freezeAuthority, // freeze authority for the mint account
         uint8 decimals // decimals for the mint account
-    ) public view {
+    ) public {
         // Invoke System Program to create a new account for the mint account and,
         // Invoke Token Program to initialize the mint account
         // Set mint authority, freeze authority, and decimals for the mint account

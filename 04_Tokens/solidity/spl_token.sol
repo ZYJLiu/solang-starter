@@ -45,7 +45,7 @@ library SplToken {
 	/// @param tokenAccount the public key of the token account to initialize
 	/// @param mint the public key of the mint account for this new token account
 	/// @param owner the public key of the owner of this new token account
-	function initialize_account(address tokenAccount, address mint, address owner) internal view{
+	function initialize_account(address tokenAccount, address mint, address owner) internal {
 		bytes instr = new bytes(1);
 
 		instr[0] = uint8(TokenInstruction.InitializeAccount);
@@ -65,7 +65,7 @@ library SplToken {
 	/// @param tokenAccount the public key of the token account to initialize
 	/// @param mint the public key of the mint account for this new token account
 	/// @param owner the public key of the owner of this new token account
-    function create_associated_token_account(address payer, address tokenAccount, address mint, address owner) internal view {
+    function create_associated_token_account(address payer, address tokenAccount, address mint, address owner) internal  {
         AccountMeta[6] metas = [
 			AccountMeta({pubkey: payer, is_writable: true, is_signer: true}),
 			AccountMeta({pubkey: tokenAccount, is_writable: true, is_signer: false}),
@@ -94,7 +94,7 @@ library SplToken {
 	/// @param mintAuthority the public key of the mint authority
 	/// @param freezeAuthority the public key of the freeze authority
 	/// @param decimals the decimals of the mint
-	function initialize_mint(address mint, address mintAuthority, address freezeAuthority, uint8 decimals) internal view {
+	function initialize_mint(address mint, address mintAuthority, address freezeAuthority, uint8 decimals) internal  {
     	InitializeMintInstruction instr = InitializeMintInstruction({
             instruction: 20,
             decimals: decimals,
@@ -117,7 +117,7 @@ library SplToken {
 	/// @param mintAuthority the public key of the mint authority
 	/// @param freezeAuthority the public key of the freeze authority
 	/// @param decimals the decimals of the mint
-	function create_mint(address payer, address mint, address mintAuthority, address freezeAuthority, uint8 decimals) internal view {
+	function create_mint(address payer, address mint, address mintAuthority, address freezeAuthority, uint8 decimals) internal  {
 		// Invoke System Program to create a new account for the mint account
         // Program owner is set to the Token program
         SystemInstruction.create_account(
@@ -149,7 +149,7 @@ library SplToken {
 	/// @param account the token account where the minted tokens should go
 	/// @param authority the public key of the mint authority
 	/// @param amount the amount of tokens to mint
-	function mint_to(address mint, address account, address authority, uint64 amount) internal view {
+	function mint_to(address mint, address account, address authority, uint64 amount) internal  {
 		bytes instr = new bytes(9);
 
 		instr[0] = uint8(TokenInstruction.MintTo);
@@ -171,7 +171,7 @@ library SplToken {
 	/// @param to the account to transfer tokens to
 	/// @param owner the publickey of the from account owner keypair
 	/// @param amount the amount to transfer
-	function transfer(address from, address to, address owner, uint64 amount) internal view {
+	function transfer(address from, address to, address owner, uint64 amount) internal  {
 		bytes instr = new bytes(9);
 
 		instr[0] = uint8(TokenInstruction.Transfer);
@@ -192,7 +192,7 @@ library SplToken {
 	/// @param mint the mint for this token
 	/// @param owner the publickey of the account owner keypair
 	/// @param amount the amount to transfer
-	function burn(address account, address mint, address owner, uint64 amount) internal view {
+	function burn(address account, address mint, address owner, uint64 amount) internal  {
 		bytes instr = new bytes(9);
 
 		instr[0] = uint8(TokenInstruction.Burn);
@@ -213,7 +213,7 @@ library SplToken {
 	/// @param delegate the delegate publickey
 	/// @param owner the publickey of the account owner keypair
 	/// @param amount the amount to approve
-	function approve(address account, address delegate, address owner, uint64 amount) internal view {
+	function approve(address account, address delegate, address owner, uint64 amount) internal  {
 		bytes instr = new bytes(9);
 
 		instr[0] = uint8(TokenInstruction.Approve);
@@ -233,7 +233,7 @@ library SplToken {
 	///
 	/// @param account the account for which a delegate should be approved
 	/// @param owner the publickey of the account owner keypair
-	function revoke(address account, address owner) internal view {
+	function revoke(address account, address owner) internal  {
 		bytes instr = new bytes(1);
 
 		instr[0] = uint8(TokenInstruction.Revoke);
@@ -248,7 +248,7 @@ library SplToken {
 
 	/// Get the total supply for the mint, i.e. the total amount in circulation
 	/// @param mint the mint for this token
-	function total_supply(address mint) internal view returns (uint64) {
+	function total_supply(address mint) internal  returns (uint64) {
 		AccountInfo account = get_account_info(mint);
 
 		return account.data.readUint64LE(36);
@@ -257,7 +257,7 @@ library SplToken {
 	/// Get the balance for an account.
 	///
 	/// @param account the account for which we want to know a balance
-	function get_balance(address account) internal view returns (uint64) {
+	function get_balance(address account) internal  returns (uint64) {
 		AccountInfo ai = get_account_info(account);
 
 		return ai.data.readUint64LE(64);
@@ -267,7 +267,7 @@ library SplToken {
 	/// and find the account info, or the transaction fails.
 	///
 	/// @param account the account for which we want to have the acount info.
-	function get_account_info(address account) internal view returns (AccountInfo) {
+	function get_account_info(address account) internal  returns (AccountInfo) {
 		for (uint64 i = 0; i < tx.accounts.length; i++) {
 			AccountInfo ai = tx.accounts[i];
 			if (ai.key == account) {
@@ -304,7 +304,7 @@ library SplToken {
 	///
 	/// @param tokenAccount The token account
 	/// @return struct TokenAccountData
-	function get_token_account_data(address tokenAccount) public view returns (TokenAccountData) {
+	function get_token_account_data(address tokenAccount) public  returns (TokenAccountData) {
 		AccountInfo ai = get_account_info(tokenAccount);
 
 		TokenAccountData data = TokenAccountData(
@@ -341,7 +341,7 @@ library SplToken {
 	///
 	/// @param mintAccount the account whose information we want to retrive
 	/// @return the MintAccountData struct
-	function get_mint_account_data(address mintAccount) public view returns (MintAccountData) {
+	function get_mint_account_data(address mintAccount) public  returns (MintAccountData) {
 		AccountInfo ai = get_account_info(mintAccount);
 
 		uint32 authority_present = ai.data.readUint32LE(0);
@@ -371,7 +371,7 @@ library SplToken {
 	///
 	/// @param mintAccount the public key for the mint account
 	/// @param mintAuthority the public for the mint authority
-	function remove_mint_authority(address mintAccount, address mintAuthority) public view {
+	function remove_mint_authority(address mintAccount, address mintAuthority) public  {
 		AccountMeta[2] metas = [
 			AccountMeta({pubkey: mintAccount, is_signer: false, is_writable: true}),
 			AccountMeta({pubkey: mintAuthority, is_signer: true, is_writable: false})
