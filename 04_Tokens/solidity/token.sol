@@ -24,5 +24,4 @@ contract token {
             decimals         // decimals
         );
     }
-
 }
