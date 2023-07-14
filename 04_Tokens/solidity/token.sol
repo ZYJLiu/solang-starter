@@ -24,4 +24,20 @@ contract token {
             decimals         // decimals
         );
     }
+
+    function mintTokens(
+        address payer, // payer account
+        address mint, // mint account, (what kind of token to mint)
+        address tokenAccount, // the account tokens are minted to
+        uint64 amount // amount of tokens to mint
+    ) public {
+        // Mint tokens to the token account
+        SplToken.mint_to(
+            mint, // mint account
+            tokenAccount, // token account
+            payer, // mint authority
+            amount // amount
+        );
+    }
+
 }
