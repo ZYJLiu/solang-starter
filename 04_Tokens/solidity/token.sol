@@ -4,7 +4,7 @@ import "./spl_token.sol";
 contract token {
 
     @payer(payer)
-    constructor(address payer) {}
+    constructor() {}
 
     function createTokenMint(
         address payer, // payer account

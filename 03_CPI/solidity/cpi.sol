@@ -5,7 +5,7 @@ contract flipper {
     bool private value = true;
 
     @payer(payer)
-    constructor(address payer) {
+    constructor() {
         print("Hello, World!");
     }
 
@@ -32,7 +32,7 @@ interface flipperInterface {
 contract cpi {
 
     @payer(payer)
-    constructor(address payer) {}
+    constructor() {}
 
     function flipCpi(address dataAccount) public {
         AccountMeta[1] metas = [

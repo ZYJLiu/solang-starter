@@ -20,7 +20,7 @@ describe("token", () => {
   it("Is initialized!", async () => {
     // Add your test here.
     const tx = await program.methods
-      .new(wallet.publicKey)
+      .new()
       .accounts({ dataAccount: dataAccount.publicKey })
       .signers([dataAccount])
       .rpc();

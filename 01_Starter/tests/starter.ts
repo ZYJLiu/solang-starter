@@ -15,7 +15,7 @@ describe("starter", () => {
   it("Is initialized!", async () => {
     // Add your test here.
     const tx = await program.methods
-      .new(wallet.publicKey)
+      .new()
       .accounts({ dataAccount: dataAccount.publicKey })
       .signers([dataAccount])
       .rpc();
@@ -46,10 +46,10 @@ describe("starter", () => {
     const dataAccount2 = anchor.web3.Keypair.generate();
 
     const instruction = await program.methods
-      .new(wallet.publicKey)
+      .new()
       .accounts({
         dataAccount: dataAccount2.publicKey,
-        wallet: wallet.publicKey,
+        payer: wallet.publicKey,
       })
       .instruction();
 

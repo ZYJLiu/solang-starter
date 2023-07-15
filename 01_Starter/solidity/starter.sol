@@ -4,7 +4,7 @@ contract starter {
     bool private value = true;
 
     @payer(payer)
-    constructor(address payer) {
+    constructor() {
         print("Hello, World!");
     }
 
