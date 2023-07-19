@@ -1,6 +1,6 @@
-import "./spl_token.sol";
+import "../libraries/spl_token.sol";
 
-@program_id("F1ipperKF9EfD821ZbbYjS319LXYiBmjhzkkf5a26rC")
+@program_id("4ymDbVPj5baUw8bFNLBVybmDLAbJDKEeFWtfn6KEcqku")
 contract token {
 
     @payer(payer)

@@ -10,7 +10,6 @@ describe("cpi", () => {
 
   const dataAccount = anchor.web3.Keypair.generate();
   const dataAccount2 = anchor.web3.Keypair.generate();
-  const wallet = provider.wallet;
 
   const flipperProgram = anchor.workspace.Flipper as Program<Flipper>;
   const cpiProgram = anchor.workspace.Cpi as Program<Cpi>;
@@ -24,36 +23,23 @@ describe("cpi", () => {
       .rpc();
     console.log("Your transaction signature", tx);
 
-    const val1 = await flipperProgram.methods
+    const val = await flipperProgram.methods
       .get()
       .accounts({ dataAccount: dataAccount.publicKey })
       .view();
 
-    console.log("state", val1);
-
-    await flipperProgram.methods
-      .flip()
-      .accounts({ dataAccount: dataAccount.publicKey })
-      .rpc();
-
-    const val2 = await flipperProgram.methods
-      .get()
-      .accounts({ dataAccount: dataAccount.publicKey })
-      .view();
-
-    console.log("state", val2);
+    console.log("state", val);
   });
 
   it("Flip CPI", async () => {
     // Add your test here.
-    const tx = await cpiProgram.methods
+    await cpiProgram.methods
       .new()
       .accounts({ dataAccount: dataAccount2.publicKey })
       .signers([dataAccount2])
       .rpc();
-    console.log("Your transaction signature", tx);
 
-    await cpiProgram.methods
+    const txSig = await cpiProgram.methods
       .flipCpi(dataAccount.publicKey)
       .accounts({ dataAccount: dataAccount2.publicKey })
       .remainingAccounts([
@@ -69,6 +55,8 @@ describe("cpi", () => {
         },
       ])
       .rpc();
+
+    console.log("Your transaction signature", txSig);
 
     const val = await flipperProgram.methods
       .get()

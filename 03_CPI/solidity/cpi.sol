@@ -1,6 +1,6 @@
 import 'solana';
 
-@program_id("bXHdKxE4Ti8gsQUSSWvhodPpgjcQFHtdnYx2Ab1S2S2")
+@program_id("GyWjf3mHhKi5Qbr57crXzannY9JDrF3x5U4FSx8z8urh")
 contract flipper {
     bool private value = true;
 
@@ -14,6 +14,7 @@ contract flipper {
     /// to `false` and vice versa.
     function flip() public {
             value = !value;
+            print("Flip!");
     }
 
     /// Simply returns the current value of our `bool`.
@@ -23,12 +24,12 @@ contract flipper {
 }
 
 // Interface to the flipper program.
-flipperInterface constant flipperProgram = flipperInterface(address'bXHdKxE4Ti8gsQUSSWvhodPpgjcQFHtdnYx2Ab1S2S2');
+flipperInterface constant flipperProgram = flipperInterface(address'GyWjf3mHhKi5Qbr57crXzannY9JDrF3x5U4FSx8z8urh');
 interface flipperInterface {
     function flip() external;
 }
 
-@program_id("JCEZ3WFA6jCP35ywaLZaqn8dSs1p3JQXJFqKwGJffCVZ")
+@program_id("6BLnqBHgaShKoMMZRKxoPfG4oBrUQD7gbAgikZbpo7Nx")
 contract cpi {
 
     @payer(payer)
